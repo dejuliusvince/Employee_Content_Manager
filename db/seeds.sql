@@ -20,13 +20,12 @@ VALUES ("John", "Doe", 1),
        ("Ashley", "Rodriguez", 3),
        ("Kevin", "Tupik", 4),
        ("Kunal", "Singh", 5),
-       ("Malia", "Singh", 6),
+       ("Malia", "Brown", 6),
        ("Sarah", "Lourd", 7),
        ("Tom", "Allen", 8)
 ;
 
 /*need to make an UPDATE crud operation to set the manager's id once the employee table has been created*/
 UPDATE employee SET manager_id=1 WHERE id=2;
-
 
 
