@@ -47,6 +47,9 @@ function menu(){
     else if(response.menu==="Add an employee"){
       addEmployee()
     }
+    else if (response.menu==="Add a department"){
+      addDepartment()
+    }
   })
 }
 
@@ -90,7 +93,23 @@ function viewAllEmployees(){
   })
 }
 
-
+function addDepartment(){
+  db.query(`SELECT name from department`, (err, departmentData)=>{
+    const addDepartmentQuestions = [
+      {
+        type: "input",
+        name: "department_id",
+        message: "What is the name of the department"
+      }
+    ]
+    inquirer.prompt(addDepartmentQuestions).then(response=>{
+      const newDepartment = response.department_id
+      db.query(`INSERT INTO department(name) VALUES(?)`, newDepartment, (err,data)=>{
+        viewAllDepartments()
+      })
+    })
+  })
+}
 
 
 function addEmployee(){
