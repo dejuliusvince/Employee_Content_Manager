@@ -20,17 +20,8 @@ const menuQuestion = [
 
 
 
-const addDepartmentQuestions = [
-  {
-    type: "input",
-    name: "department_id",
-    message: "What is the name of the department"
-  },
-]
 
-
-
-
+//handle all selection options when user starts the app
 function menu(){
   inquirer.prompt(menuQuestion)
   .then(response=>{
@@ -57,6 +48,8 @@ function menu(){
   })
 }
 
+
+//Need functions to handle all from menu(), query necessary responses from the database and perform the cooresponding query//
 function viewAllDepartments(){
   db.query(`
     SELECT * from department
