@@ -6,7 +6,6 @@ require("console.table")
 
 
 db.connect( ()=>{
-  console.log(db)
     menu()
 } )
 
@@ -49,6 +48,11 @@ function menu(){
     }
     else if (response.menu==="Add a department"){
       addDepartment()
+    }
+    else if (response.menu==="Add a role"){
+      addRole()
+    }else if (response.menu==="Update an employee"){
+      updateEmployee()
     }
   })
 }
@@ -112,6 +116,39 @@ function addDepartment(){
 }
 
 
+function addRole(){
+  db.query(`SELECT title as name, salary as value from role`, (err, roleSalaryData)=>{
+    db.query(`SELECT name, id as value from department`, (err, deptNameData)=>{
+      const addRoleQuestions = [
+        {
+          type: "input",
+          name: "role_id",
+          message: "What is the name of the role?"
+        },
+        {
+          type: "input",
+          name: "salary",
+          message: "What is the salary of the role?"
+        },
+        {
+          type: "list",
+          name: "department_id",
+          message: "Which department does the role belong to?",
+          choices: deptNameData
+        }
+      ]
+      inquirer.prompt(addRoleQuestions).then (response=>{
+        const parameters = [response.role_id, response.salary, response.department_id]
+        db.query(`INSERT into role (title, salary, department_id) VALUES (?,?,?)`, parameters, (err,data)=>{
+        
+          viewAllRoles()
+        })
+      })
+    })
+  })
+}
+
+
 function addEmployee(){
   
   db.query(`select title as name, id as value from role`,
@@ -153,4 +190,31 @@ function addEmployee(){
     })
   })
 
+}
+
+function updateEmployee(){
+  db.query(`SELECT CONCAT(first_name, " ", last_name) as name, id as value from employee`, (err, employeeData)=>{
+    db.query(`SELECT title as name, id as value from role`, (err, roleNames)=>{
+        const updateEmployeeQuestions = [
+          {
+            type: "list",
+            name: "employee_id",
+            message: "Which employee's role would you like to update",
+            choices: employeeData
+          },
+          {
+            type: "list",
+            name: "role_id",
+            message: "What will their new role be?",
+            choices: roleNames
+          }
+        ]
+        inquirer.prompt(updateEmployeeQuestions).then(response=>{
+          const parameters = [response.employe_id, response.roleNames]
+          db.query(`INSERT into employee  (name, role_id) VALUES (?,?,?)`, parameters, (err,data)=>{
+            viewAllEmployees()
+        })
+        })
+    })
+  })
 }
