@@ -36,7 +36,10 @@ FROM role
 LEFT JOIN department ON role.department_id=department.id
 ;
 
-
+/*RETURNS AN EMPTY SET
+SELECT CONCAT(first_name, " ", last_name) as name,
+id as value FROM employee WHERE manager_id = NULL;
+*/
 
 
 

@@ -26,8 +26,5 @@ VALUES ("John", "Doe", 1),
 ;
 
 
-/*need to make an UPDATE crud operation to set the manager's id once the employee table has been created
 
 UPDATE employee SET manager_id=1 WHERE id=2;
-
-*/
